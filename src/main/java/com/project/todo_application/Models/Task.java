@@ -13,7 +13,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String taskName;
+    private String title;
     private boolean completed;
 
 }
