@@ -1,10 +1,13 @@
-FROM maven:3.9.6-eclipse-temurin-23-alpine AS build
+# Multi-stage build for efficiency
+FROM openjdk:23-jdk-slim AS build
 WORKDIR /app
+COPY mvnw .
+COPY .mvn .mvn
 COPY pom.xml .
-COPY src ./src
-RUN mvn clean package -DskipTests
+COPY src src
+RUN ./mvnw clean package -DskipTests
 
-FROM eclipse-temurin:23-jdk-alpine
+FROM openjdk:23-jdk-slim
 WORKDIR /app
 COPY target/ToDo_Application-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
